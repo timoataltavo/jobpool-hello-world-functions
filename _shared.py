@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shlex
 from textwrap import dedent
 
 from jobpool_sdk import Container, MinimalComputeResources
@@ -14,7 +15,8 @@ class PythonSlim(Container):
 
 def python_command(source: str) -> str:
     script = dedent(source).strip()
-    return f"python -c {json.dumps(script)}"
+    python_exec = f"exec python3 -c {shlex.quote(script)}"
+    return f"/bin/sh -lc {shlex.quote(python_exec)}"
 
 
 __all__ = [
