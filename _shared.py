@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import json
 import shlex
 from textwrap import dedent
@@ -15,8 +16,13 @@ class PythonSlim(Container):
 
 def python_command(source: str) -> str:
     script = dedent(source).strip()
-    python_exec = f"exec python3 -c {shlex.quote(script)}"
-    return f"/bin/sh -lc {shlex.quote(python_exec)}"
+    encoded = base64.b64encode(script.encode("utf-8")).decode("ascii")
+    bootstrap = (
+        "import base64; "
+        f"exec(compile(base64.b64decode({encoded!r}).decode('utf-8'), "
+        "'<jobpool-container>', 'exec'))"
+    )
+    return f"python3 -c {shlex.quote(bootstrap)}"
 
 
 __all__ = [
