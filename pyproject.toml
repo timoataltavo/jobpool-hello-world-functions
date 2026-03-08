@@ -1,0 +1,13 @@
+[project]
+name = "jobpool-hello-world-functions"
+version = "0.1.0"
+description = "Training and smoke-test functions for JobPool."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "jobpool-sdk",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
