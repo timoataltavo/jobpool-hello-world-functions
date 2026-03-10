@@ -7,6 +7,7 @@ It is intentionally small and self-contained:
 
 - `hello_world`: plain Python function with JobPool logging
 - `container_hello_world`: runs a Docker container and returns its result
+- `two_container_tempdisk_hello_world`: shares a TempDisk scratch folder across two containers
 - `secret_container_hello_world`: injects a fake token into a container
 - `spawn_hello_world`: submits `hello_world` as a child run and waits for it
 
@@ -14,6 +15,7 @@ It is intentionally small and self-contained:
 
 - `hello_world.py`
 - `container_hello_world.py`
+- `two_container_tempdisk_hello_world.py`
 - `secret_container_hello_world.py`
 - `spawn_hello_world.py`
 - `_shared.py`
@@ -39,8 +41,16 @@ Run from this directory:
 ```bash
 jobpool-dev hello_world
 jobpool-dev container_hello_world
+jobpool-dev two_container_tempdisk_hello_world
 jobpool-dev secret_container_hello_world
 jobpool-dev spawn_hello_world
+```
+
+For the container-based examples, make sure the active `jobpool-dev`
+environment includes the Docker extra:
+
+```bash
+uv sync --extra docker
 ```
 
 Optional arguments:
@@ -48,6 +58,7 @@ Optional arguments:
 ```bash
 jobpool-dev hello_world --name Berlin
 jobpool-dev container_hello_world --name Container
+jobpool-dev two_container_tempdisk_hello_world --name Scratch
 jobpool-dev secret_container_hello_world --name Secret
 jobpool-dev spawn_hello_world --name Child
 ```
