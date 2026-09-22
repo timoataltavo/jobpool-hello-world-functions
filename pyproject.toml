@@ -17,3 +17,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.jobpool]
 functions_package = "locked_check"
+
+[tool.uv]
+# Lock the lowest allowed direct versions so the committed lock pins a requests
+# release that differs from PyPI's latest: a locked-tier install is then
+# distinguishable from any strategy that re-resolves the manifest.
+resolution = "lowest-direct"
