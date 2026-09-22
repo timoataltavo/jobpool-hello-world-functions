@@ -5,7 +5,10 @@ description = "Training and smoke-test functions for JobPool."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-  "jobpool-sdk",
+  # jobpool-sdk is runtime-owned: the executor strips it from the install set and
+  # imports it from the runtime, so this check branch leaves it out to keep the
+  # committed uv.lock resolvable from public PyPI alone.
+  "requests>=2.32",
 ]
 
 [build-system]
