@@ -5,10 +5,10 @@ description = "Training and smoke-test functions for JobPool."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-  # jobpool-sdk is runtime-owned: the executor strips it from the install set and
-  # imports it from the runtime, so this check branch leaves it out to keep the
-  # committed uv.lock resolvable from public PyPI alone.
   "requests>=2.32",
+  # Lives only on altavo-pypi: installing it proves the run-scoped (or endpoint)
+  # feed credential reached the worker's dependency install. Torch-free profile.
+  "mlops-components[jobpool]==0.1.35",
 ]
 
 [build-system]
@@ -18,8 +18,9 @@ build-backend = "setuptools.build_meta"
 [tool.jobpool]
 functions_package = "locked_check"
 
-[tool.uv]
-# Lock the lowest allowed direct versions so the committed lock pins a requests
-# release that differs from PyPI's latest: a locked-tier install is then
-# distinguishable from any strategy that re-resolves the manifest.
-resolution = "lowest-direct"
+# No uv.lock on this branch on purpose: the worker resolves through the declared
+# index order (manifest-configured tier), consulting altavo-pypi first and public
+# PyPI (the implicit default) last.
+[[tool.uv.index]]
+name = "altavo-pypi"
+url = "https://pkgs.dev.azure.com/Altavo/ea5ad794-6428-471f-bd0a-a259fb297d0e/_packaging/altavo-pypi/pypi/simple/"
