@@ -5,7 +5,7 @@ description = "Training and smoke-test functions for JobPool."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-  "requests>=2.32",
+  "requests>=2.32.3",
   # Lives only on altavo-pypi: installing it proves the run-scoped (or endpoint)
   # feed credential reached the worker's dependency install. Torch-free profile.
   "mlops-components[jobpool]==0.1.35",
