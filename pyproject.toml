@@ -19,8 +19,14 @@ build-backend = "setuptools.build_meta"
 functions_package = "locked_check"
 
 # No uv.lock on this branch on purpose: the worker resolves through the declared
-# index order (manifest-configured tier), consulting altavo-pypi first and public
-# PyPI (the implicit default) last.
+# index order (manifest-configured tier): altavo-pypi first, then MachineLearning,
+# then public PyPI (the implicit default). Both Altavo feeds are private, so the
+# run (jobpool run) or its function endpoint must bring a credential for each; the
+# dev pools forward none.
 [[tool.uv.index]]
 name = "altavo-pypi"
 url = "https://pkgs.dev.azure.com/Altavo/ea5ad794-6428-471f-bd0a-a259fb297d0e/_packaging/altavo-pypi/pypi/simple/"
+
+[[tool.uv.index]]
+name = "MachineLearning"
+url = "https://pkgs.dev.azure.com/Altavo/ClinicalDemonstrator/_packaging/MachineLearning/pypi/simple/"
