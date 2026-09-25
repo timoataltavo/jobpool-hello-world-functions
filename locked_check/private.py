@@ -5,10 +5,19 @@ import os
 import sys
 from pathlib import Path
 
+from jobpool_core.types import ComputeResources
 from jobpool_sdk import function
 
 
-@function
+class OneGpu(ComputeResources):
+    """Ask for one GPU so the run lands on a dev Lambda GPU pool: the shared northeurope
+    CPU quota can be exhausted by prod, and the check only needs some dev worker whose
+    pool forwards no package feed."""
+
+    gpus = 1
+
+
+@function(compute=OneGpu)
 def private_hello(name: str = "World") -> dict[str, object]:
     """Report the mlops-components version the venv holds and how the venv was built.
 
